@@ -6,8 +6,26 @@ socket.on('connect', function() {
 socket.on('newMessage', function(message) {
   //console.log('User:', message.from, 'said=', message.text, ' at timeStamp: ', message.time);
   console.log('newMessage', message);
+  let li = $('<li></li>');
+  li.text(`${message.from}: ${message.text}`);
+  $('#messages').append(li);
 });
 
 socket.on('disconnect', function() {
   console.log('Client: disconnected from server');
+});
+
+$('#message-form').on('submit', function(e) {
+  e.preventDefault();
+
+  socket.emit('createMessage', {
+    from: 'Frank',
+    text: $('[name="message"]').val()
+  }, function() {
+    console.log('Got something from server');
+  });
+  $('[name=message]').val('');
+  // setTimeout(function() {
+  //   $('[name="message"]').val('')
+  // }, 1000);
 });
