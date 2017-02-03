@@ -1,4 +1,4 @@
-let socket = io();
+var socket = io();
 socket.on('connect', function() {
   console.log('Client: Connected to server');
 });
@@ -6,7 +6,7 @@ socket.on('connect', function() {
 socket.on('newMessage', function(message) {
   //console.log('User:', message.from, 'said=', message.text, ' at timeStamp: ', message.time);
   console.log('newMessage', message);
-  let li = $('<li></li>');
+  var li = $('<li></li>');
   li.text(`${message.from}: ${message.text}`);
   $('#messages').append(li);
 });
