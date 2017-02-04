@@ -20,7 +20,7 @@ socket.on('disconnect', function() {
 });
 
 var intervalId, timeoutBannerId, vexAlertId, watchId ;
-var geolocationBtn = $('#geolocation-btn');
+var geolocationBtn = $('#send-location');
 
 var resetGeoButtonText = function () {
   clearInterval(intervalId);

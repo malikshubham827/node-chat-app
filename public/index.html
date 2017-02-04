@@ -3,26 +3,38 @@
 
   <head>
   <meta charset="utf-8">
-  <title>My Node Chat App</title>
-  <script src="../js/vex.combined.min.js"></script>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+  <script src="js/lib/vex.combined.min.js"></script>
   <script>
     vex.defaultOptions.className = 'vex-theme-os'
   </script>
-  <link rel="stylesheet" href="../css/vex.css" />
-  <link rel="stylesheet" href="../css/vex-theme-os.css" />
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link rel="stylesheet" href="css/vex.css" />
+  <link rel="stylesheet" href="css/vex-theme-os.css" />
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
-  <body>
-    <p>Welcome to the node chat app !!</p>
+  <body class="chat">
+    <div class="chat__sidebar">
+      <h3>People</h3>
+      <div id="users">
+      </div>
+    </div>
 
-    <ol id="messages">
-    </ol>
+    <div class="chat__main">
+      <ol id="messages"></ol>
 
-    <form id="message-form">
-      <input name="message" autofocus placeholder="type your message here" />
-      <button>Send</button>
-    </form>
-    <button id="geolocation-btn">Send Geolocation</button>
+      <div class="chat__footer">
+        <form id="message-form">
+          <input name="message" autofocus autocomplete="off" placeholder="type your message here" />
+          <button>Send</button>
+        </form>
+        <button id="send-location">Send Geolocation</button>
+      </div>
+
+    </div>
+
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/lib/jquery-3.1.0.min.js"></script>
     <script src="/js/index.js"></script>
