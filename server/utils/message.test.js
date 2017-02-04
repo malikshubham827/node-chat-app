@@ -1,6 +1,7 @@
 const expect = require('expect');
 let {
-  generateMessage
+  generateMessage,
+  generateLocationMessage
 } = require('./message');
 
 describe('generateMessage', () => {
@@ -16,5 +17,15 @@ describe('generateMessage', () => {
       text
     });
   });
+});
 
+describe('generateLocationMessage', () => {
+  it('should return the location message object', () => {
+    let latitude = 23.346322, longitude = 45.34525513;
+    let from = 'Admin';
+    let message = generateLocationMessage(from, latitude, longitude);
+    expect(message.createdAt).toBeA('number');
+    expect(message.from).toBe(from);
+    expect(message.url).toBe('https://www.google.com/maps?q=23.346322,45.34525513');
+  });
 });
