@@ -6,14 +6,17 @@ socket.on('connect', function() {
 });
 
 var messages = $('#messages');
+
 socket.on('newMessage', function(message) {
-  //console.log('User:', message.from, 'said=', message.text, ' at timeStamp: ', message.time);
   var formattedTime = moment(message.createdAt).format('h:mm a');
-  // console.log('newMessage', message);
-  var li = $('<li></li>');
-  li.text(`${message.from} [${formattedTime}]: ${message.text}`);
-  // $('#messages').append(li);
-  messages.append(li);
+  var template = $('#message-template').html();
+  var html = Mustache.render(template, {
+    from: message.from,
+    createdAt: formattedTime,
+    text: message.text
+  });
+  messages.append(html);
+
 });
 
 socket.on('disconnect', function() {
@@ -30,12 +33,13 @@ var resetGeoButtonText = function () {
 }
 socket.on('newLocationMessage', function(message) {
   var formattedTime = moment(message.createdAt).format('h:mm a');
-  var li = $('<li></li>');
-  var a = $('<a target="_blank">My Location</a>');
-  li.text(`${message.from} [${formattedTime}]:`);
-  a.attr('href', message.url);
-  li.append(a);
-  messages.append(li);
+  var template = $('#location-message-template').html();
+  var html = Mustache.render(template, {
+    from: message.from,
+    url: message.url,
+    createdAt: moment(message.createdAt).format('h:mm a')
+  });
+  messages.append(html);
   resetGeoButtonText();
 });
 

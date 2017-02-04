@@ -28,6 +28,7 @@ html {
 
 #messages {
   /*border: 1px solid red;*/
+  list-style-type: none;
   flex: 30 1 auto;
 }
 
@@ -57,15 +58,31 @@ input {
   flex: 0.1 1 auto;
 }
 
-h3 {
+#people {
   text-align: center;
   /*border: 1px solid red;*/
+}
+
+h3 {
+  margin: 0;
+  display: inline-block;
+  font-size: 3.1vh;
+  font-weight: 900;
+}
+
+#people {
+  display: block;
+  text-align: center;
 }
 
 button {
   font-size: 1.5vh;
   margin: 2px 3px 2px 3px;
   background-color: rgb(70, 150, 245);
+}
+
+span {
+  color: rgb(167, 157, 152);
 }
 
 #send-location:disabled {
