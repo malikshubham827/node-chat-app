@@ -1,4 +1,5 @@
 'use strict';
+
 var socket = io();
 socket.on('connect', function() {
   console.log('Client: Connected to server');
@@ -18,12 +19,13 @@ socket.on('disconnect', function() {
   console.log('Client: disconnected from server');
 });
 
-var intervalId ;
+var intervalId, timeoutBannerId, vexAlertId, watchId ;
 var geolocationBtn = $('#geolocation-btn');
 
 var resetGeoButtonText = function () {
   clearInterval(intervalId);
   geolocationBtn.text('Send Geolocation');
+  geolocationBtn.attr('disabled', false);
 }
 socket.on('newLocationMessage', function(message) {
   var li = $('<li></li>');
@@ -48,6 +50,8 @@ $('#message-form').on('submit', function(e) {
 });
 
 var geoSuccess = function (position) {
+  clearTimeout(timeoutBannerId);
+  navigator.geolocation.clearWatch(watchId);
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
 
@@ -55,18 +59,40 @@ var geoSuccess = function (position) {
     latitude,
     longitude
   });
+
 }
 
-var geoError = function () {
-  alert('Could not retreive your location');
+var geoError = function (e) {
+  clearTimeout(timeoutBannerId);
+  navigator.geolocation.clearWatch(watchId);
+  resetGeoButtonText();
+  vex.dialog.alert('Could not retreive your location\n' + e.message);
 }
+
+var showBanner = function() {
+  resetGeoButtonText();
+  navigator.geolocation.clearWatch(watchId);
+  vexAlertId = vex.dialog.alert('Sorry, could not fetch location[TIMEOUT]');
+}
+
+// var hideBanner = function() {
+//   resetGeoButtonText();
+//   try {
+//     vex.close(vexAlertId);
+//   } catch (e) {
+//
+//   };
+// }
 
 geolocationBtn.on('click', function() {
   if (!navigator.geolocation) {
-    alert('Your browsert does not support Geolocation facility');
+    vex.dialog.alert('Your browsert does not support Geolocation facility');
     return ;
   }
+  timeoutBannerId = setTimeout(showBanner,10*1000);
+  geolocationBtn.attr('disabled', true);
 
+  // butto animation
   var newText = 'Fetching';
   geolocationBtn.text(newText);
   intervalId = setInterval(function() {
@@ -78,6 +104,7 @@ geolocationBtn.on('click', function() {
     }
     geolocationBtn.text(newText);
   },500);
-  navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+
+  watchId = navigator.geolocation.watchPosition(geoSuccess, geoError);
 
 });
