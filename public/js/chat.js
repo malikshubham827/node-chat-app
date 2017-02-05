@@ -78,7 +78,6 @@ $('#message-form').on('submit', function(e) {
   e.preventDefault();
 
   socket.emit('createMessage', {
-    from: 'Frank',
     text: $('[name="message"]').val()
   }, function() {
     console.log('Got something from server');
