@@ -1,5 +1,27 @@
 'use strict';
 
+function scrollToBottom() {
+  var messages = $('#messages');
+  var newMessage = messages.children('li:last-child');
+
+  var clientHeight = messages.prop('clientHeight');
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  console.log('clientHeight: ', clientHeight);
+  console.log('offsetheight: ', messages.prop('offsetHeight'));
+  console.log('scrollTop: ', scrollTop);
+  console.log('scrollHeight ', scrollHeight);
+  console.log('newMessageHeight: ', newMessageHeight);
+  console.log('lastMessageHeight: ', lastMessageHeight);
+
+  if (scrollTop + clientHeight + lastMessageHeight + newMessageHeight >= scrollHeight) {
+    console.log('Should scroll');
+  }
+}
+
 var socket = io();
 socket.on('connect', function() {
   console.log('Client: Connected to server');
@@ -16,7 +38,7 @@ socket.on('newMessage', function(message) {
     text: message.text
   });
   messages.append(html);
-
+  scrollToBottom();
 });
 
 socket.on('disconnect', function() {
@@ -41,6 +63,7 @@ socket.on('newLocationMessage', function(message) {
   });
   messages.append(html);
   resetGeoButtonText();
+  scrollToBottom();
 });
 
 $('#message-form').on('submit', function(e) {

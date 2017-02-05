@@ -1,68 +1,27 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-  <script src="js/lib/vex.combined.min.js"></script>
-  <script>
-    vex.defaultOptions.className = 'vex-theme-os'
-  </script>
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link rel="stylesheet" href="css/vex.css" />
-  <link rel="stylesheet" href="css/vex-theme-os.css" />
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-
-  <body class="chat">
-    <div class="chat__sidebar">
-      <h3 id="people">People</h3>
-      <div id="users">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Join | Vartal-App</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body class="landing-page">
+    <form class="centered-form" action="/chat.html">
+      <div class="form-field">
+        <h3>Join Chat</h3>
       </div>
-    </div>
-
-    <div class="chat__main">
-      <ol id="messages"></ol>
-
-      <div class="chat__footer">
-        <form id="message-form">
-          <input name="message" autofocus autocomplete="off" placeholder="type your message here" />
-          <button>Send</button>
-        </form>
-        <button id="send-location">Send Geolocation</button>
+      <div class="form-field">
+        <label for="name">Display Name</label>
+        <input type="text" name="name" autofocus/>
       </div>
-
-    </div>
-
-    <script id="message-template" is="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h3>{{from}}</h3>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p>{{text}}</p>
-        </div>
-      </li>
-    </script>
-
-    <script id="location-message-template" is="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h3>{{from}}</h3>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p><a href="{{url}}" target="_blank">My current location</a></p>
-        </div>
-      </li>
-    </script>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/lib/jquery-3.1.0.min.js"></script>
-    <script src="/js/lib/moment.js"></script>
-    <script src="/js/lib/mustache.js"></script>
-    <script src="/js/index.js"></script>
+      <div class="form-field">
+        <label for="room-no">Room Number</label>
+        <input type="text" name="room-no" />
+      </div>
+      <div class="form-field">
+        <button>Join Room</button>
+      </div>
+    </form>
   </body>
-
 </html>
